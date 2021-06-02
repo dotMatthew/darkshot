@@ -2,16 +2,12 @@ import { Request, Router } from 'express';
 import multer from 'multer';
 import path from 'path';
 import environment from '../environment';
+import PictureModel from '../schema/Picture.schema';
 
 const router: Router = Router();
 
 const storage = multer.diskStorage({
   destination: environment.data_storage,
-
-  filename(req, file, cb) {
-    cb(null, Math.floor(Math.random() * (1000000 - 1) + 1) + path.extname(file.originalname));
-  },
-
 });
 
 const upload = multer({
@@ -40,9 +36,25 @@ router.get('/:id', async (req: Request, res) => {
  *
  */
 router.post('/', upload.single('upload_image'), async (req: Request, res) => {
-  /* console.log('File uploaded...');
-  console.log(`id: ${req.file.filename}`); */
-  res.sendStatus(200);
+
+  PictureModel.create({
+    fileName: req.file.filename,
+    mimeType: req.file.mimetype,
+    fileExtension: path.extname(req.file.originalname)
+  }).then(model => res.sendStatus(200)).catch(error => res.json(error));
+
+});
+
+router.get('/test/test', async (req: Request, res) => {
+
+  PictureModel.create({
+    fileName: 'test',
+    mimeType: 'image/jpeg',
+    fileExtension: 'jpg'
+  }).then(model => {
+    res.sendStatus(200);
+  }).catch(err => res.json(err));
+
 });
 
 export const PictureController: Router = router;
