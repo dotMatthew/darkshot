@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import { PictureController, UserController } from './controller';
+import { PictureController } from './controller';
 
 const router: Router = Router();
 
 router.use('/picture', PictureController);
-router.use('/user', UserController);
 
 export const MainRouter: Router = router;
