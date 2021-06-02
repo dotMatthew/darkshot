@@ -1,7 +1,6 @@
-import fs from "fs";
+import fs from 'fs';
 
 export class FileSystem {
-
   static async isExists(path: string) {
     try {
       await fs.access(path, fs.constants.F_OK, () => { });
@@ -10,5 +9,4 @@ export class FileSystem {
       return false;
     }
   }
-
 }
