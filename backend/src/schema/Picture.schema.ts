@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IPicture extends Document {
-  fileName: String;
-  mimeType: String;
-  fileExtension: String;
+  fileName: string;
+  mimeType: string;
+  fileExtension: string;
 }
 
 const PictureSchema: Schema = new Schema({
