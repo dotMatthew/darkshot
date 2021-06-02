@@ -41,7 +41,9 @@ router.post('/', upload.single('upload_image'), async (req: Request, res) => {
     fileName: req.file.filename,
     mimeType: req.file.mimetype,
     fileExtension: path.extname(req.file.originalname)
-  }).then(model => res.sendStatus(200)).catch(error => res.json(error));
+  }).then(model =>
+    res.sendStatus(200))
+    .catch(error => res.json(error));
 
 });
 
