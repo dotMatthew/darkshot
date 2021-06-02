@@ -1,10 +1,5 @@
-import mongoose, { Document, Schema } from "mongoose";
-
-export interface IPicture extends Document {
-  fileName: string;
-  mimeType: string;
-  fileExtension: string;
-}
+import mongoose, { Schema } from "mongoose";
+import IPicture from "../interfaces/IPicture";
 
 const PictureSchema: Schema = new Schema({
   fileName: {
