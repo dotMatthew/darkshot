@@ -10,9 +10,7 @@ const storage = multer.diskStorage({
   destination: environment.data_storage,
 });
 
-const upload = multer({
-  storage,
-});
+const upload = multer({ storage });
 
 /**
  *
@@ -37,25 +35,13 @@ router.get('/:id', async (req: Request, res) => {
  */
 router.post('/', upload.single('upload_image'), async (req: Request, res) => {
 
-  PictureModel.create({
+  await PictureModel.create({
     fileName: req.file.filename,
     mimeType: req.file.mimetype,
     fileExtension: path.extname(req.file.originalname)
   }).then(model =>
     res.sendStatus(200))
     .catch(error => res.json(error));
-
-});
-
-router.get('/test/test', async (req: Request, res) => {
-
-  PictureModel.create({
-    fileName: 'test',
-    mimeType: 'image/jpeg',
-    fileExtension: 'jpg'
-  }).then(model => {
-    res.sendStatus(200);
-  }).catch(err => res.json(err));
 
 });
 
