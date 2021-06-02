@@ -20,6 +20,13 @@ mongoose
 app.use(express.json());
 app.use('/', MainRouter);
 
+process.on("SIGINT", () => {
+  try {
+    mongoose.disconnect().then();
+  } catch { }
+  process.exit(0);
+});
+
 app.listen(environment.port, () => {
   console.log(`Darkshot server started at ${new Date()} on https://localhost:${environment.port}`);
 });
