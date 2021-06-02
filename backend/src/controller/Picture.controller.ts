@@ -20,12 +20,21 @@ const upload = multer({ storage });
 router.get('/:id', async (req: Request, res) => {
   const id = req.params.id;
 
-  /* if (!(await FileSystem.isExists("/storage/" + id))) {
-    res.writeHead(404);
-    res.write("id not found!");
-  } */
+  if(id.length > 24 || id.length < 24) {
+    res.write("error at parsing id");
+    res.end();
+  } else {
+    const model = await PictureModel.findOne({}).exec();
+  
+    if(model == null) {
+      res.write("id not found!");
+      res.end();
+    } else {
+      res.sendFile(`/storage/${model.fileName}.${model.fileExtension}`);
+    }
+  }
 
-  res.sendFile(`/storage/${id}.jpg`);
+  
 });
 
 /**
